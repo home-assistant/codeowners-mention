@@ -20,7 +20,7 @@
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
-    "codeowners-utils": "1.0.0",
+    "codeowners-utils": "git+https://github.com/robbiet480/codeowners-utils.git",
     "probot": "^7.2.0"
   },
   "devDependencies": {

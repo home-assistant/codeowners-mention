@@ -1,5 +1,5 @@
 {
-  "action": "opened",
+  "action": "labeled",
   "issue": {
     "number": 1,
     "user": {
