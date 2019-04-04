@@ -21,7 +21,6 @@
   },
   "dependencies": {
     "codeowners-utils": "1.0.0",
-    "owners-file": "github:bkeepers/owners-node",
     "probot": "^7.2.0"
   },
   "devDependencies": {
