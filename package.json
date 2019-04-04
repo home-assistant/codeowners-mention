@@ -1,0 +1,52 @@
+{
+  "name": "codeowners-mention",
+  "version": "1.0.0",
+  "description": "A Probot app to mention user(s) listed in CODEOWNERS on newly opened issues and PRs that have associated integration labels",
+  "author": "The Home Assistant Authors <hello@home-assistant.io> (https://github.com/home-assistant/codeowners-mention)",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/home-assistant/codeowners-mention.git",
+  "homepage": "https://github.com/home-assistant/codeowners-mention",
+  "bugs": "https://github.com/home-assistant/codeowners-mention/issues",
+  "keywords": [
+    "probot",
+    "github",
+    "probot-app"
+  ],
+  "scripts": {
+    "dev": "nodemon",
+    "start": "probot run ./index.js",
+    "lint": "standard --fix",
+    "test": "jest && standard",
+    "test:watch": "jest --watch --notify --notifyMode=change --coverage"
+  },
+  "dependencies": {
+    "codeowners-utils": "1.0.0",
+    "owners-file": "github:bkeepers/owners-node",
+    "probot": "^7.2.0"
+  },
+  "devDependencies": {
+    "jest": "^24.0.0",
+    "nock": "^10.0.0",
+    "nodemon": "^1.17.2",
+    "smee-client": "^1.0.2",
+    "standard": "^12.0.1"
+  },
+  "engines": {
+    "node": ">= 8.3.0"
+  },
+  "standard": {
+    "env": [
+      "jest"
+    ]
+  },
+  "nodemonConfig": {
+    "exec": "npm start",
+    "watch": [
+      ".env",
+      "."
+    ]
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}
