@@ -36,13 +36,27 @@ module.exports = app => {
     }
 
     const codeownersLine = `${codeownersData.data.html_url}#L${match.line}`
-    const allOwners = match.owners.join(', ');
+
+    const getMaxParams = context.issue({per_page: 100})
+
+    const issue = await context.github.issues.get(context.issue())
+    const assignees = issue.data.assignees.map(assignee => assignee.login.toLowerCase())
+
+    const commentersData = await context.github.issues.listComments(getMaxParams)
+    const commenters = commentersData.data.map(commenter => commenter.user.login.toLowerCase())
+
+    const mentions = match.owners.filter(rawUsername => {
+      const username = rawUsername.substring(1)
+      return context.payload.issue.user.login != username && assignees.indexOf(username) === -1 && commenters.indexOf(username) === -1
+    }).join(', ')
 
     const triggerLabel = (context.name === "issues") ? 'issue' : 'pull request'
 
-    const commentBody = `Hey there ${allOwners}, mind taking a look at this ${triggerLabel} as its been labeled with a integration (\`${integrationName}\`) you are listed as a [codeowner](${codeownersLine}) for? Thanks!`
+    const commentBody = `Hey there ${mentions}, mind taking a look at this ${triggerLabel} as its been labeled with a integration (\`${integrationName}\`) you are listed as a [codeowner](${codeownersLine}) for? Thanks!`
 
     console.log(`Adding comment to ${triggerLabel} ${triggerURL}: ${commentBody}`)
+
+    await context.github.issues.addAssignees(context.issue({assignees: match.owners}))
 
     const issueComment = context.issue({ body: commentBody })
     return context.github.issues.createComment(issueComment)
