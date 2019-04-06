@@ -45,9 +45,8 @@ module.exports = app => {
     const commentersData = await context.github.issues.listComments(getMaxParams)
     const commenters = commentersData.data.map(commenter => commenter.user.login.toLowerCase())
 
-    const usernames = match.owners.map(rawUsername => rawUsername.substring(1))
-
-    const mentions = usernames.filter(username => {
+    const mentions = match.owners.filter(rawUsername => {
+      const username = rawUsername.substring(1)
       return context.payload.issue.user.login != username && assignees.indexOf(username) === -1 && commenters.indexOf(username) === -1
     })
 
@@ -57,7 +56,9 @@ module.exports = app => {
 
     console.log(`Adding comment to ${triggerLabel} ${triggerURL}: ${commentBody}`)
 
-    await context.github.issues.addAssignees(context.issue({assignees: usernames}))
+    const assignees = match.owners.map(rawUsername => rawUsername.substring(1))
+
+    await context.github.issues.addAssignees(context.issue({assignees: assignees}))
 
     if(mentions.length === 0) {
       return
