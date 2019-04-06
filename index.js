@@ -56,9 +56,9 @@ module.exports = app => {
 
     console.log(`Adding comment to ${triggerLabel} ${triggerURL}: ${commentBody}`)
 
-    const assignees = match.owners.map(rawUsername => rawUsername.substring(1))
+    const newAssignees = match.owners.map(rawUsername => rawUsername.substring(1))
 
-    await context.github.issues.addAssignees(context.issue({assignees: assignees}))
+    await context.github.issues.addAssignees(context.issue({assignees: newAssignees}))
 
     if(mentions.length === 0) {
       return
