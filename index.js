@@ -45,9 +45,11 @@ module.exports = app => {
     const commentersData = await context.github.issues.listComments(getMaxParams)
     const commenters = commentersData.data.map(commenter => commenter.user.login.toLowerCase())
 
+    const payloadUsername = context.payload[triggerType].user.login
+
     const mentions = match.owners.filter(rawUsername => {
       const username = rawUsername.substring(1)
-      return context.payload.issue.user.login != username && assignees.indexOf(username) === -1 && commenters.indexOf(username) === -1
+      return payloadUsername != username && assignees.indexOf(username) === -1 && commenters.indexOf(username) === -1
     })
 
     const triggerLabel = (context.name === "issues") ? 'issue' : 'pull request'
