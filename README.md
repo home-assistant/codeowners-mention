@@ -1,3 +1,5 @@
+# DEPRECATED. Now part of [our probot repo](https://github.com/home-assistant/probot-home-assistant/tree/master/src/plugins/CodeOwnersMention)
+
 # codeowners-mention
 
 > A GitHub App built with [Probot](https://github.com/probot/probot) that A Probot app to mention user(s) listed in CODEOWNERS on newly opened issues and PRs that have associated integration labels
